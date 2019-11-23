@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{% block title %}主页{% endblock %}-Myhealth后台管理系统</title>
+
+    {% include 'basic/css.html' %}
+
+    {% block css %}
+
+    {% endblock %}
+</head>
+<body>
+{% include 'basic/top.html' %}
+
+<section>
+    <div class="container-fluid">
+        <div class="row ">
+
+            {% include 'basic/menu.html' %}
+
+
+            <div class="col-xs-10">
+                <br/>
+                    <ol class="breadcrumb">
+                        <li class="active"><span class="glyphicon glyphicon-home"></span> {% block content_nav_home %}后台首页{% endblock %}</li>
+                        {% block content_nav %}
+
+                        {% endblock %}
+                    </ol>
+
+                {% block content %}
+                    <h1 class="text-center text-white">Myhealth后台管理系统</h1>
+                {% endblock %}
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<footer class="bg-primary navbar-fixed-bottom">
+    <p class="text-center text-white">版权所有&copy;千锋教育-西安校区Python1904研发团队</p>
+</footer>
+
+{% include 'basic/js.html' %}
+<script>
+    function init_es() {
+        fetch('/init_es/')
+            .then(resp=>resp.json())
+            .then(data=>{
+                alert(data.msg);
+            })
+<<<<<<< HEAD
+=======
+
+>>>>>>> c4571bae774ff3624468a72c53c7febd78fc4a22
+    }
+</script>
+{% block js %}
+
+{% endblock %}
+
+</body>
+</html>

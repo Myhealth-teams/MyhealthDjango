@@ -1,38 +1,33 @@
 {% extends 'basic/base.html' %}
 
-{% block content_nav_home %}产品管理{% endblock %}
+{% block content_nav_home %}数据库管理{% endblock %}
 {% block content_nav %}
-    <li>产品分类</li>
+    <li>数据表管理</li>
+    <li>{{ table }}</li>
 {% endblock %}
 {% block content %}
     <a href="#" class="btn btn-success" data-toggle="modal" data-target="#add1" style="margin: 5px 0">添加</a>
     <table class="table table-bordered table-striped text-center bg-info">
         <thead>
         <tr class="info">
-            <th class="text-center">id</th>
-            <th class="text-center">name</th>
-{#            <th class="text-center">url</th>#}
-            <th class="text-center">price</th>
-            <th class="text-center">medtype</th>
-            <th class="text-center">standards</th>
-            <th class="text-center">detial</th>
+            {% for item in items2 %}
+                <th class="text-center">{{ item.0 }}</th>
+            {% endfor %}
+
+
+
             <th class="text-center" width="200px">操作</th>
         </tr>
         </thead>
         <tbody>
-        {% for good in goods %}
+        {% for item in items1 %}
             <tr>
-                <td>{{ good.goods_id }}</td>
-                <td>{{ good.goods_name }}</td>
-{#                <td>{{ good.url }}</td>#}
-                <td>{{ good.price }}</td>
-                <td>{{ good.medtype }}</td>
-                <td>{{ good.standards }}</td>
-                <td>{{ good.detial }}</td>
+                {% for sub in item %}
+                    <td>{{ sub }}</td>
+                {% endfor %}
                 <td>
-                    <a href="#" class="btn btn-info btn-sm" data-toggle="modal"
-                       onclick="edit({{ good.goods_id }}, '{{ good.goods_name }}', '{{ good.url }}', '{{ good.price }}', '{{ good.medtype }}', '{{ good.standards }}', '{{ good.detial }}')">编辑</a>
-                    <a onclick="delete_goods({{ good.goods_id }}, '{{ good.goods_name }}', '{{ good.url }}', '{{ good.price }}', '{{ good.medtype }}', '{{ good.standards }}', '{{ good.detial }}')" class="btn btn-danger btn-sm">删除</a>
+                    <a href="#" class="btn btn-info btn-sm" data-toggle="modal" onclick="edit()">编辑</a>
+                    <a onclick="delete_goods()" class="btn btn-danger btn-sm">删除</a>
                 </td>
             </tr>
         {% endfor %}
@@ -51,30 +46,13 @@
                 <form method="post">
                     <div class="modal-body">
                         <ul>
-                            <li>
-                                <label><span>name ：</span></label>
-                                <input type="text" name="name"/>
-                            </li>
-                            <li>
-                                <label><span>url ：</span></label>
-                                <input type="text" name="url"/>
-                            </li>
-                            <li>
-                                <label><span>price ：</span></label>
-                                <input type="text" name="price"/>
-                            </li>
-                            <li>
-                                <label><span>medtype ：</span></label>
-                                <input type="text" name="medtype"/>
-                            </li>
-                            <li>
-                                <label><span>standards：</span></label>
-                                <input type="text" name="standards"/>
-                            </li>
-                            <li>
-                                <label><span>detial ：</span></label>
-                                <input type="text" name="detial"/>
-                            </li>
+                            {% for items in items2 %}
+
+                                <li>
+                                <label><span>{{ items.0 }}：</span></label>
+                                <input type="text" name="{{ items.0 }}"/>
+                                </li>
+                            {% endfor %}
 
                         </ul>
                     </div>
@@ -99,34 +77,13 @@
                 <form method="post">
                     <div class="modal-body">
                         <ul>
-                            <li>
-                                <label><span>id ：</span></label>
-                                <input type="text" name="good_id" disabled/>
+                            {% for i in  list1 %}
+
+                                <li>
+                                <label><span>{{ items2.i.0 }}：</span></label>
+                                <input id="{{ items2.i.0 }}" type="text" name="{{ item2.0.0 }}" value="{{ items1.i.0}}"/>
                             </li>
-                            <li>
-                                <label><span>name ：</span></label>
-                                <input type="text" name="name"/>
-                            </li>
-                            <li>
-                                <label><span>url ：</span></label>
-                                <input type="text" name="url"/>
-                            </li>
-                            <li>
-                                <label><span>price ：</span></label>
-                                <input type="text" name="price"/>
-                            </li>
-                            <li>
-                                <label><span>medtype ：</span></label>
-                                <input type="text" name="medtype"/>
-                            </li>
-                            <li>
-                                <label><span>standards：</span></label>
-                                <input type="text" name="standards"/>
-                            </li>
-                            <li>
-                                <label><span>detial ：</span></label>
-                                <input type="text" name="detial"/>
-                            </li>
+                            {% endfor %}
 
                         </ul>
                     </div>
@@ -166,15 +123,8 @@
 
 {% block js %}
     <script>
-        function edit(id, name, url,price,medtype,standards,detial) {
-            console.log(111)
-            $('#edit_id').val(id);
-            $('#edit_name').val(name);
-            $('#edit_url').val(url);
-            $('#edit_price').val(price);
-            $('#edit_medtype').val(medtype);
-            $('#edit_standards').val(standards);
-            $('#edit_detial').val(detial);
+        function edit() {
+
             $('#edit').modal('show');
         }
 

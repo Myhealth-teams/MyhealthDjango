@@ -2,20 +2,15 @@ from django.db import connection
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.views import View
-from common import es_
 from sys_user.models import *
 from pymysql.cursors import DictCursor
-from sys_user.models import SysRole
+from common import es_
+import pymysql
 
 
-from django.db import connection
-
-# Create your views here.
 
 
 #系统管理/用户角色
-
-from common import es_
 
 class RoleView(View):
     def get(self, request):
@@ -59,6 +54,26 @@ class RoleView(View):
             'msg': '删除成功!'
         })
 
+#数据表管理
+class ShowTableView(View):
+    def get(self,request):
+        conn = pymysql.connect(user='team',host='122.112.231.109',port=3306,password='123456',database='myhealth',charset='utf8')
+        cursor = conn.cursor()
+        try:
+            cursor.execute("show tables;")
+            items = cursor.fetchall()
+            conn.commit()
+            print(items)
+        except:
+            conn.rollback()
+        finally:
+            conn.close()
+            cursor.close()
+
+
+
+        return render(request,'sys_mgr/alltable.html',locals())
+
 
 
 #产品管理/产品分类
@@ -75,13 +90,38 @@ class Product_view(View):
                 'standards':goods.standards,
                 'detial':goods.detial
             })
+        table = request.GET.get('tname')
+        conn = pymysql.connect(user='team',host='122.112.231.109',port=3306,password='123456',database='myhealth',charset='utf8')
+        cursor1 = conn.cursor()
+        cursor2 = conn.cursor()
+        try:
+            sql1 = "select * from {};".format(table)
+            sql2 = "desc {}".format(table)
+            cursor1.execute(sql1)
+            cursor2.execute(sql2)
 
-        goods = Goods.objects.all()
+            items1 = cursor1.fetchall()
+            items2 = cursor2.fetchall()
+            conn.commit()
+            print(items1)
+        except:
+            conn.rollback()
+        finally:
+            conn.close()
+            cursor1.close()
+
+        list1 = [i for i in range(len(items1[0]))]
+        print(list1)
+
         return render(request, 'sys_mgr/product.html', locals())
+
+
+
     def post(self, request):
         print(request.POST)
-        id = request.POST.get('goods_id', None)  # 注意： form表单页面不建议使用id 字段名
-        name = request.POST.get('goods_name')
+        id = request.POST.get('goods_id', None)
+        print(id)# 注意： form表单页面不建议使用id 字段名
+        name = request.POST.get('name')
         url = request.POST.get('url')
         price = request.POST.get('price')
         medtype = request.POST.get('medtype')
@@ -106,7 +146,7 @@ class Product_view(View):
 
     def delete(self, request):
         goods_id = request.GET.get('id')
-        good = SysRole.objects.get(pk=goods_id)
+        good = Goods.objects.get(pk=goods_id)
         good.delete()
 
         return JsonResponse({

@@ -42,6 +42,9 @@ class Goods(models.Model):
     class Meta:
         managed = False
         db_table = 'goods'
+    def __str__(self):
+        return "商品表"
+
 
 
 class Medtypes(models.Model):
@@ -52,6 +55,7 @@ class Medtypes(models.Model):
     class Meta:
         managed = False
         db_table = 'medtypes'
+
 
 
 class RotationStatus(models.Model):
@@ -71,6 +75,8 @@ class Rotatitons(models.Model):
     class Meta:
         managed = False
         db_table = 'rotatitons'
+
+
 
 
 class SysRole(models.Model):

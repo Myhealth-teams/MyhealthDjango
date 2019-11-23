@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 
 import requests
 
@@ -7,21 +7,9 @@ PORT = 9200
 
 INDEX = 'yloa'
 
+
 def create_index(index_name='yloa'):
-=======
-#!/usr/bin/python3
-# coding: utf-8
 
-import requests
-
-HOST = '119.3.170.97'
-PORT = 80  # 默认的是 9200
-
-INDEX = 'jyoa'
-
-
-def create_index(index_name='jyoa'):
->>>>>>> c4571bae774ff3624468a72c53c7febd78fc4a22
     global INDEX
     INDEX = index_name
     url = f'http://{HOST}:{PORT}/{index_name}'
@@ -75,11 +63,8 @@ def remove_doc(doc_type, doc_id):
 
 
 def search(keyword):
-<<<<<<< HEAD
+
     url = f'http://{HOST}:{PORT}/_all/_search?q={keyword}'
-=======
-    url = url = f'http://{HOST}:{PORT}/_all/_search?q={keyword}'
->>>>>>> c4571bae774ff3624468a72c53c7febd78fc4a22
     resp = requests.get(url)
     ret = resp.json()
     hits = ret.get('hits').get('hits')
@@ -95,7 +80,7 @@ def search(keyword):
 
 
 if __name__ == '__main__':
-
+    pass
     # doc = {
     #     'id': 1,
     #     'name': 'disen',
@@ -103,18 +88,7 @@ if __name__ == '__main__':
     #     'age': 20
     # }
     # create_index()
-<<<<<<< HEAD
-    add_doc(doc, 'person')
-    # remove_doc('person1', 'w5_3lW4BMRCZTBbTXLkQ')
-    # remove_index()
 
-    print(search(''))
-=======
     # add_doc(doc, 'person')
     # remove_doc('person1', 'w5_3lW4BMRCZTBbTXLkQ')
     # remove_index()
-
-    print(search('少儿'))
-
-
->>>>>>> c4571bae774ff3624468a72c53c7febd78fc4a22

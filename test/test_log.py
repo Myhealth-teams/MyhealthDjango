@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-=======
-#!/usr/bin/python3
-# coding: utf-8
->>>>>>> c4571bae774ff3624468a72c53c7febd78fc4a22
+
 
 import logging
 from logging.handlers import TimedRotatingFileHandler, HTTPHandler, SMTPHandler
@@ -50,8 +46,5 @@ def test_all_msg():
     logger.critical('紧急情况，这里出现了很严重的错误！')
 
 
-<<<<<<< HEAD
+
 test_all_msg()
-=======
-test_all_msg()
->>>>>>> c4571bae774ff3624468a72c53c7febd78fc4a22

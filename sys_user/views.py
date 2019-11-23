@@ -1,29 +1,22 @@
 from django.db import connection
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
-
 from django.views import View
-<<<<<<< HEAD
-
 from common import es_
 from sys_user.models import *
-
-=======
 from pymysql.cursors import DictCursor
-
 from sys_user.models import SysRole
->>>>>>> c4571bae774ff3624468a72c53c7febd78fc4a22
+
 
 from django.db import connection
 
 # Create your views here.
 
-<<<<<<< HEAD
+
 #系统管理/用户角色
-=======
+
 from common import es_
 
->>>>>>> c4571bae774ff3624468a72c53c7febd78fc4a22
 class RoleView(View):
     def get(self, request):
         if request.GET.get('id', ''):
@@ -67,7 +60,7 @@ class RoleView(View):
         })
 
 
-<<<<<<< HEAD
+
 #产品管理/产品分类
 class Product_view(View):
     def get(self, request):
@@ -123,15 +116,12 @@ class Product_view(View):
 
 
 #搜索引擎和日志
-=======
->>>>>>> c4571bae774ff3624468a72c53c7febd78fc4a22
 class ESView(View):
     def get(self, request):
         # 同步ES（初始化）
         es_.create_index()
 
         cursor = connection.cursor()
-<<<<<<< HEAD
         cursor.execute('select * from goods')
         for row in cursor.fetchall():
             print(row)
@@ -143,15 +133,6 @@ class ESView(View):
                 'medtype': row[4],
                 'standards': row[5],
                 'detial': row[6]
-=======
-        cursor.execute('select id,name,ord_sn,parent_id from t_category')
-        for row in cursor.fetchall():
-            doc = {
-                'id': row[0],
-                'name': row[1],
-                'ord_sn': row[2],
-                'parent_id': row[3]
->>>>>>> c4571bae774ff3624468a72c53c7febd78fc4a22
             }
 
             es_.add_doc(doc, 'category')

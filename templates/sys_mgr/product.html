@@ -7,15 +7,12 @@
 {% endblock %}
 {% block content %}
     <a href="#" class="btn btn-success" data-toggle="modal" data-target="#add1" style="margin: 5px 0">添加</a>
-    <table class="table table-bordered table-striped text-center bg-info">
+    <table  id="center_table" class="table table-bordered table-striped text-center bg-info" >
         <thead>
         <tr class="info">
             {% for item in items2 %}
                 <th class="text-center">{{ item.0 }}</th>
             {% endfor %}
-
-
-
             <th class="text-center" width="200px">操作</th>
         </tr>
         </thead>
@@ -23,11 +20,11 @@
         {% for item in items1 %}
             <tr>
                 {% for sub in item %}
-                    <td>{{ sub }}</td>
+                    {{ sub|to_str|to_img_tag }}
                 {% endfor %}
                 <td>
-                    <a href="#" class="btn btn-info btn-sm" data-toggle="modal" onclick="edit()">编辑</a>
-                    <a onclick="delete_goods()" class="btn btn-danger btn-sm">删除</a>
+                    <a href="#" class="btn btn-info btn-sm" data-toggle="modal" onclick="edit({{ items_list }},{{ item.0 }})">编辑</a>
+                    <a onclick="delete_goods({{ item.0 }},'{{ items2.0.0 }}')" class="btn btn-danger btn-sm">删除</a>
                 </td>
             </tr>
         {% endfor %}
@@ -43,15 +40,22 @@
                             aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="add11">添加</h4>
                 </div>
-                <form method="post">
+                <form action="/product/?table={{ table }}&flag=1" method="post">
                     <div class="modal-body">
                         <ul>
                             {% for items in items2 %}
-
-                                <li>
-                                <label><span>{{ items.0 }}：</span></label>
-                                <input type="text" name="{{ items.0 }}"/>
-                                </li>
+{#                                {% if forloop.first %}#}
+{#                                     <li>#}
+{#                                    <label><span>{{ items.0 }}：</span></label>#}
+{#                                    <input type="text" name="{{ items.0 }}" disabled/>#}
+{#                                    </li>#}
+{#                                {% endif %}#}
+                                {% if not forloop.first %}
+                                    <li>
+                                    <label><span>{{ items.0 }}：</span></label>
+                                    <input type="text" name="{{ items.0 }}"/>
+                                    </li>
+                                {% endif %}
                             {% endfor %}
 
                         </ul>
@@ -74,15 +78,14 @@
                             aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="add11">编辑</h4>
                 </div>
-                <form method="post">
+                <form action="/product/?table={{ table }}&flag=0" method="post">
                     <div class="modal-body">
                         <ul>
-                            {% for i in  list1 %}
-
+                            {% for item in  items2 %}
                                 <li>
-                                <label><span>{{ items2.i.0 }}：</span></label>
-                                <input id="{{ items2.i.0 }}" type="text" name="{{ item2.0.0 }}" value="{{ items1.i.0}}"/>
-                            </li>
+                                <label><span>{{ item.0 }}：</span></label>
+                                <input id="{{ item.0 }}" type="text" name="{{ item.0 }}"/>
+                                </li>
                             {% endfor %}
 
                         </ul>
@@ -121,24 +124,41 @@
     </div>
 {% endblock %}
 
-{% block js %}
-    <script>
-        function edit() {
 
+
+
+{% block js %}
+    {# 编辑 #}
+    <script>
+        function edit(items_list,id) {
+            console.log(items_list,id);
+            for(i in items_list){
+                console.log(items_list[i][0][1]);
+                if(items_list[i][0][1]==id){
+                    for(j in items_list[i]){
+                        console.log();
+                       $("#"+items_list[i][j][0]).val(items_list[i][j][1]);
+                    }
+                }
+            }
             $('#edit').modal('show');
         }
 
+        {# 删除 #}
 
+        var d_id = 0;
+        var str_id = "";
+        function delete_goods(id,st){
 
-        var good_id = 0;
-        function delete_goods(goodid, goods_name) {
-            good_id = goodid;
-            $('#msg').html('是否删除 '+ goods_name+" ?");
+            d_id =id;
+            str_id = st;
+            console.log(id,str_id)
+            $('#msg').html('是否删除 ID为'+d_id +" 的行?");
             $('#info').modal('toggle');
         }
-
         function delete_ajax() {
-            url = window.location.href + "?id=" + good_id;
+            console.log(window.location.href);
+            url = window.location.href + "&d_id="+d_id+"&str_id="+str_id ;
             fetch(url, {
                 method: 'DELETE'
             }).then(resp => resp.json()).then(data => {

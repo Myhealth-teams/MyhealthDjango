@@ -13,6 +13,7 @@ body{
 }
 .center {
     margin: 0 auto;
+    overflow: scroll;
 }
 .left {
     float: left;
@@ -49,16 +50,17 @@ section{
 .col-xs-10{
     margin-left: 17%;
 }
+
 footer{
     height: 50px;
     line-height: 50px;
 }
 /***************************************/
-/*×ó²à²Ëµ¥*/
+/*ï¿½ï¿½ï¿½Ëµï¿½*/
 .sidebar-menu{
     border-right: 1px solid #c4c8cb;
 }
-/*Ò»¼¶²Ëµ¥*/
+/*Ò»ï¿½ï¿½ï¿½Ëµï¿½*/
 .menu-first{
     /*height:45px;*/
     line-height:45px;
@@ -80,7 +82,7 @@ footer{
     text-decoration: none;
     color:#337AB7;
 }
-/*Ò»¼¶²Ëµ¥Êó±ê»®¹ý×´Ì¬*/
+/*Ò»ï¿½ï¿½ï¿½Ëµï¿½ï¿½ï¿½ê»®ï¿½ï¿½×´Ì¬*/
 .menu-first:hover,.menu-first-active{
     text-decoration: none;
     background-color: #d6d4d5;
@@ -88,7 +90,7 @@ footer{
     border-top: 1px solid #b7b7b7;
     border-bottom: 1px solid #acacac;
 }
-/*¶þ¼¶²Ëµ¥*/
+/*ï¿½ï¿½ï¿½ï¿½ï¿½Ëµï¿½*/
 .menu-second li a{
     background-color: #f6f6f6;
     height:31px;
@@ -98,7 +100,7 @@ footer{
     font-size: 12px;
     text-align:center;
 }
-/*¶þ¼¶²Ëµ¥Êó±ê»®¹ýÑùÊ½*/
+/*ï¿½ï¿½ï¿½ï¿½ï¿½Ëµï¿½ï¿½ï¿½ê»®ï¿½ï¿½ï¿½ï¿½Ê½*/
 .menu-second li a:hover {
     text-decoration: none;
     background-color: #66c3ec;
@@ -107,7 +109,7 @@ footer{
     border-right: 3px solid  #f8881c;
     border-left: 3px solid #66c3ec;
 }
-/*¶þ¼¶²Ëµ¥Ñ¡ÖÐ×´Ì¬*/
+/*ï¿½ï¿½ï¿½ï¿½ï¿½Ëµï¿½Ñ¡ï¿½ï¿½×´Ì¬*/
 .menu-second .menu-second-selected {
     background-color: #66c3ec;
     height:31px;
@@ -122,7 +124,7 @@ footer{
     background-color: #66c3ec;
 }
 
-/*¸²¸ÇbootstrapµÄÑùÊ½*/
+/*ï¿½ï¿½ï¿½ï¿½bootstrapï¿½ï¿½ï¿½ï¿½Ê½*/
 .panel-group .panel + .panel {
  margin-top: 0px;
 }
@@ -138,7 +140,7 @@ footer{
     color:#999;
 }
 /***********************************************/
-/*p1.html ±í¸ñ*/
+/*p1.html ï¿½ï¿½ï¿½*/
 .line{
     width: 200px;
     margin-right: 10px;
@@ -172,7 +174,7 @@ footer{
     width: 260px;;
 }
 /*****************************************************/
-/*p2.html Í¼±í*/
+/*p2.html Í¼ï¿½ï¿½*/
 .canvas{
     float:left;
     margin:50px 0 50px 60px;

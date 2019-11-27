@@ -1,12 +1,13 @@
 import pymysql
 
 
+# 连接数据库
 def get_conn():
-
     conn = pymysql.connect(user='team', host='122.112.231.109', port=3306, password='123456', database='myhealth', charset='utf8')
     return conn
 
 
+# 查询表
 def search_table(table):
         conn = get_conn()
         cursor1 = conn.cursor()
@@ -19,20 +20,24 @@ def search_table(table):
 
             items1 = cursor1.fetchall()
             items2 = cursor2.fetchall()
+            print(items2)
             conn.commit()
             return items1,items2
-        except:
+        except Exception as e:
+            print(e)
             conn.rollback()
             return [],[]
         finally:
             conn.close()
             cursor1.close()
 
+
+# 显示表
 def show_tables():
     conn = get_conn()
     cursor = conn.cursor()
     try:
-        cursor.execute("show tables;")
+        cursor.execute("select english,chinese from translate;")
         items = cursor.fetchall()
         conn.commit()
         return items
@@ -44,6 +49,7 @@ def show_tables():
         cursor.close()
 
 
+# 组装表数据
 def package_items(items1,items2):
     items_list = []
     for i in range(len(items1)):
@@ -58,6 +64,7 @@ def package_items(items1,items2):
     return items_list
 
 
+# 添加字段
 def insert_field(sql):
     conn = get_conn()
     cursor = conn.cursor()
@@ -73,6 +80,7 @@ def insert_field(sql):
         cursor.close()
 
 
+# 组装添加sql
 def insert_sql(value_dict,table):
     k_list = []
     v_list = []
@@ -93,6 +101,7 @@ def insert_sql(value_dict,table):
     return sql
 
 
+# 组装更新sql
 def update_sql(value_dict,table):
     k_list = []
     v_list = []
@@ -112,5 +121,66 @@ def update_sql(value_dict,table):
     str_update = str_ups[:-1]
     sql = "update {} set {} where {};".format(table,  str_update, str_v)
     return sql
+
+
+# 表字段查询
+def desc_table(table):
+    conn = get_conn()
+    cursor = conn.cursor()
+    sql = "desc {}".format(table)
+    try:
+        cursor.execute(sql)
+        item = cursor.fetchall()
+        conn.commit()
+        return item
+    except:
+        conn.rollback()
+        return []
+    finally:
+        conn.close()
+        cursor.close()
+
+
+# 组装模糊查询sql
+def search_str(str,table):
+    item = desc_table(table)
+    conn = get_conn()
+    cursor = conn.cursor()
+    str_sql = ""
+    for table_name in item:
+        str_sql += table_name[0]+" "+"like '%"+str+ "%' or "
+    sqlstr= str_sql[:-3]
+    sql = "select * from {} where {};".format(table, sqlstr)
+    print(sql)
+    try:
+        cursor.execute(sql)
+        item = cursor.fetchall()
+        conn.commit()
+        return item
+    except:
+        conn.rollback()
+        return []
+    finally:
+        conn.close()
+        cursor.close()
+
+
+# 获取表名
+def get_tname(table):
+    conn = get_conn()
+    cursor = conn.cursor()
+    try:
+        cursor.execute("select chinese from translate where english='{}';".format(table))
+        items = cursor.fetchall()
+        conn.commit()
+        return items[0][0]
+    except:
+        conn.rollback()
+        return []
+    finally:
+        conn.close()
+        cursor.close()
+
+
 
 

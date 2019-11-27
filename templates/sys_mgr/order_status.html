@@ -1,0 +1,140 @@
+{% extends 'basic/base.html' %}
+
+{% block content_nav_home %}统计查询{% endblock %}
+{% block content_nav %}
+    <li>订单统计</li>
+    <a href="#" style="float: right; margin-top: -7px;height: 35px" class="btn btn-success" >刷新</a>
+
+{% endblock %}
+
+{% block content %}
+    <table class="table table-bordered table-striped text-center bg-info">
+        <thead>
+         <tbody>
+            <div>
+                <div id="main1" class="canvas" style="height: 380px;width: 500px;">
+                    <canvas id="canvas1"></canvas>
+{#                    <p style="text-align: center;font-size: 18px;border-radius: 8px 8px 8px 8px;height:20px;width: 400px; margin-left: -16px;">日统计</p>#}
+                </div>
+                <div id="main2" class="canvas" style="height: 380px;width: 500px">
+                    <canvas id="canvas1"></canvas>
+{#                    <p style="text-align: center;font-size: 18px;background-color: pink;border-radius: 8px 8px 8px 8px;width: 490px; margin-left: -16px">周统计</p>#}
+                </div>
+                <div id="main3" class="canvas" style="height: 380px;width: 500px">
+                    <canvas id="canvas1"></canvas>
+{#                    <p style="text-align: center;font-size: 18px;background-color: pink;border-radius: 8px 8px 8px 8px;width: 490px; margin-left: -16px">月统计</p>#}
+                </div>
+                <div id="main4" class="canvas" style="height: 380px;width: 500px">
+                    <canvas id="canvas1"></canvas>
+{#                    <p style="text-align: center;font-size: 18px;background-color: pink;border-radius: 8px 8px 8px 8px;width: 490px; margin-left: -16px">年统计</p>#}
+                </div>
+            </div>
+        </tbody>
+        </thead>
+    </table>
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart1 = echarts.init(document.getElementById('main1'));
+
+        // 指定图表的配置项和数据
+        var option1 = {
+            title:{
+                text:'日统计'
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                name:'时',
+                data: ['0', '4', '8', '12', '16', '20', '24']
+            },
+            yAxis: {
+                type: 'value',
+                name:'订单量',
+            },
+            series: [{
+                data: [500, 300, 860, 1153, 1290, 1330, 1150],
+                type: 'line',
+                areaStyle: {}
+            }]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart1.setOption(option1);
+
+
+        var myChart2 = echarts.init(document.getElementById('main2'));
+        var option2 = {
+            title:{
+                text:'周统计'
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                name:'天',
+                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+            },
+            yAxis: {
+                type: 'value',
+                name:'订单量',
+            },
+            series: [{
+                data: [820, 932, 901, 934, 1290, 1330, 1320],
+                type: 'line',
+                areaStyle: {}
+            }]
+        };
+        myChart2.setOption(option2);
+
+        var myChart3 = echarts.init(document.getElementById('main3'));
+        var option3 = {
+            title:{
+                text:'月统计'
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                name:'月',
+                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+            },
+            yAxis: {
+                type: 'value',
+                name:'订单量',
+            },
+            series: [{
+                data: [820, 932, 901, 934, 1290, 1330, 1320],
+                type: 'line',
+                areaStyle: {}
+            }]
+        };
+        myChart3.setOption(option3);
+
+         var myChart4 = echarts.init(document.getElementById('main4'));
+        var option4 = {
+            title:{
+                text:'年统计'
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [{
+                data: [820, 932, 901, 934, 1290, 1330, 1320],
+                type: 'line',
+                areaStyle: {}
+            }]
+        };
+        myChart4.setOption(option4);
+
+
+    </script>
+
+{% endblock %}
+
+

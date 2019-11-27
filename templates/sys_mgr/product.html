@@ -1,26 +1,40 @@
 {% extends 'basic/base.html' %}
 
 {% block content_nav_home %}数据库管理{% endblock %}
+
 {% block content_nav %}
-    <li>数据表管理</li>
-    <li>{{ table }}</li>
+    <li><a href="/show_table/">数据表管理</a></li>
+    <li><a href="/product/?tname={{ table }}">{{ tname }}</a></li>
 {% endblock %}
+
+
 {% block content %}
-    <a href="#" class="btn btn-success" data-toggle="modal" data-target="#add1" style="margin: 5px 0">添加</a>
+    <!--添加标签-->
+    <a href="#" class="btn btn-success" data-toggle="modal" data-target="#add1" style="margin: 5px 0;float:right">添加</a>
+
+    <!--搜索表单-->
+    <form action="/search/?tname={{ table }}" method="post" style="margin-left: 5px;">
+        <label style="color: white;font-size: 18px">查询:&nbsp;&nbsp;
+            <input type="text" name="str" style="color: black;width:300px;height: 30px;border-radius: 5px 5px 5px 5px" />
+        </label>
+        <input type="submit" value="搜索" style="background-color: lightskyblue;font-size: 16px;width:80px;height: 30px;font-family: '黑体';font-weight: 700; border-radius: 5px 5px 5px 5px; margin-left: 8px">
+    </form>
+
+    <!--表单内容-->
     <table  id="center_table" class="table table-bordered table-striped text-center bg-info" >
         <thead>
-        <tr class="info">
+        <tr class="info" >
             {% for item in items2 %}
-                <th class="text-center">{{ item.0 }}</th>
+                <th class="text-center">{{ item.0}}</th>
             {% endfor %}
             <th class="text-center" width="200px">操作</th>
         </tr>
         </thead>
         <tbody>
-        {% for item in items1 %}
+        {% for item in page %}
             <tr>
                 {% for sub in item %}
-                    {{ sub|to_str|to_img_tag }}
+                    {{ sub|to_str|to_str_tag|to_img_tag }}
                 {% endfor %}
                 <td>
                     <a href="#" class="btn btn-info btn-sm" data-toggle="modal" onclick="edit({{ items_list }},{{ item.0 }})">编辑</a>
@@ -30,6 +44,25 @@
         {% endfor %}
         </tbody>
     </table>
+
+    <!--分页显示-->
+    <center>
+        <a href="?page=1&tname={{ table }}&str1={{ str1 }}" class="btn btn-success" style="margin: 5px 0">首页</a>
+        {% if page.has_previous %}
+            <a href="?page={{ page.previous_page_number }}&tname={{ table }}&str1={{ str1 }}" class="btn btn-success" style="margin: 5px 0">上一页</a>
+        {% else %}
+            <a href="javascript:alert('已经是首页了！')" class="btn btn-success" style="margin: 5px 0">上一页</a>
+        {% endif %}
+        {% for page in page_list %}
+            <a href="?page={{ page }}&tname={{ table }}&str1={{ str1 }}" class="btn btn-success" style="margin: 5px 0">{{ page }}</a>
+        {% endfor %}
+        {% if page.has_next %}
+            <a href="?page={{ page.next_page_number }}&tname={{ table }}&str1={{ str1 }}" class="btn btn-success" style="margin: 5px 0">下一页</a>
+        {% else %}
+            <a href="javascript:alert('已经是末页了！')" class="btn btn-success" style="margin: 5px 0">下一页</a>
+        {% endif %}
+        <a href="?page={{ paginator.num_pages }}&tname={{ table }}&str1={{ str1 }}" class="btn btn-success" style="margin: 5px 0">末页</a>
+    </center>
 
     <!--添加-->
     <div class="modal fade" id="add1" tabindex="-1" role="dialog" aria-labelledby="add11">
@@ -44,12 +77,6 @@
                     <div class="modal-body">
                         <ul>
                             {% for items in items2 %}
-{#                                {% if forloop.first %}#}
-{#                                     <li>#}
-{#                                    <label><span>{{ items.0 }}：</span></label>#}
-{#                                    <input type="text" name="{{ items.0 }}" disabled/>#}
-{#                                    </li>#}
-{#                                {% endif %}#}
                                 {% if not forloop.first %}
                                     <li>
                                     <label><span>{{ items.0 }}：</span></label>
@@ -99,8 +126,7 @@
         </div>
     </div>
 
-
-    <!-- 提示 -->
+    <!-- 删除提示 -->
     <div class="modal fade" id="info" tabindex="-1" role="dialog" aria-labelledby="add11">
         <div class="modal-dialog" role="document">
             <div class="modal-content">

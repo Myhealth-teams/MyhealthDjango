@@ -4,8 +4,8 @@
     padding: 0;
 }
 body{
-    background-image:url("../img/bg-login.png");
-    background-repeat: repeat-y;
+    background-image:url("/s/img/bg-login.png");
+    /*background-repeat: repeat-y;*/
     background-size: 100%;
 }
 .text-white {

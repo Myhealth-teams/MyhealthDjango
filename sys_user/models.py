@@ -128,3 +128,22 @@ class Users(models.Model):
     class Meta:
         managed = False
         db_table = 'users'
+
+class Authdeatil(models.Model):
+    detail_id = models.AutoField(primary_key=True)
+    auth_deatil1 = models.CharField(max_length=50, blank=True, null=True)
+    auth_detail = models.CharField(max_length=50, blank=True, null=True)
+    auth_id = models.IntegerField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'authdeatil'
+
+class Userauth(models.Model):
+    userid = models.IntegerField(blank=True, null=True)
+    auth = models.IntegerField(blank=True, null=True)
+    name = models.CharField(max_length=20, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'userauth'

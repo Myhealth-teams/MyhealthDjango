@@ -1,0 +1,40 @@
+{% extends 'basic/base.html' %}
+{% block content_nav_home %}系统管理{% endblock %}
+{% block content_nav %}
+    <li>用户权限</li>
+{% endblock %}
+
+{% block content %}
+    <table class="table table-bordered table-striped text-center bg-info">
+        <thead>
+        {% if auths %}
+            <th class="text-center">用户ID</th>
+            <th class="text-center">用户姓名</th>
+            <th class="text-center">用户权限</th>
+            <th class="text-center" width="200px">操作</th>
+        {% else %}
+            <th class="text-center">权限一</th>
+            <th class="text-center">权限二</th>
+        {% endif %}
+        </thead>
+        <tbody>
+        {% for auth in auths %}
+            <tr>
+                <td>{{ auth.userid }}</td>
+                <td>{{ auth.name }}</td>
+                <td>{{ auth.auth }}</td>
+                <td>
+                    <a href="/userauth/?id={{ auth.id }}"  class="btn btn-info btn-sm" data-toggle="modal"
+                       >查看用户权限</a>
+                </td>
+            </tr>
+        {% endfor %}
+
+            <tr>
+                <td>{{ authdeatil.auth_deatil1 }}</td>
+                <td>{{ authdeatil.auth_detail }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+{% endblock %}

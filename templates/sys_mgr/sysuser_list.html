@@ -1,0 +1,172 @@
+{% extends 'basic/base.html' %}
+
+{% block content_nav_home %}系统管理{% endblock %}
+{% block content_nav %}
+    <li>系统用户</li>
+{% endblock %}
+
+
+{% block content %}
+    <a href="#" class="btn btn-success" data-toggle="modal" data-target="#add1" style="margin: 5px 0">添加</a>
+    <table class="table table-bordered table-striped text-center bg-info">
+        <thead>
+        <tr class="info">
+            <th class="text-center">id</th>
+            <th class="text-center">name</th>
+            <th class="text-center">auth_string</th>
+            <th class="text-center">email</th>
+            <th class="text-center">phone</th>
+            <th class="text-center" width="200px">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for sysuser in sysuses %}
+            <tr>
+                <td>{{ sysuser.id }}</td>
+                <td>{{ sysuser.name }}</td>
+                <td>{{ sysuser.auth_string }}</td>
+                <td>{{ sysuser.email }}</td>
+                <td>{{ sysuser.phone }}</td>
+                <td>
+                    <a href="#" class="btn btn-info btn-sm" data-toggle="modal"
+                       onclick="edit({{ sysuser.id  }}, '{{ sysuser.name }}',  '{{ sysuser.phone }}', '{{ sysuser.email }}')">编辑</a>
+                    <a onclick="delete_sysuser({{ sysuser.id }}, '{{ sysuser.name }}')" class="btn btn-danger btn-sm">删除</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- 编辑 -->
+    <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="add11">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="add11">编辑</h4>
+                </div>
+                <form method="post">
+                    <div class="modal-body">
+                        <ul>
+                            <li>
+                                <label><span>用户ID</span></label>
+                                <input id="edit_id" type="text" name="sysuser_id"/>
+                            </li>
+                            <li>
+                                <label><span>用户姓名:</span></label>
+                                <input id="edit_name" type="text" name="name"/>
+                            </li>
+                            <li>
+                                <label><span>用户电话:</span></label>
+                                <input id="edit_phone" type="text" name="phone"/>
+                            </li>
+                             <li>
+                                <label><span>用户邮箱:</span></label>
+                                <input id="edit_email" type="text" name="email"/>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">取消</button>
+                        <button class="btn btn-primary btn-sm">保存</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+       <!--添加-->
+    <div class="modal fade" id="add1" tabindex="-1" role="dialog" aria-labelledby="add11">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="add11">添加</h4>
+                </div>
+                <form method="post">
+                    <div class="modal-body">
+                       <ul>
+                            <li>
+                                <label><span>ID:</span></label>
+                                <input id="edit_id" type="text" name="sysuser_id"/>
+                            </li>
+                            <li>
+                                <label><span>name:</span></label>
+                                <input id="edit_name" type="text" name="name"/>
+                            </li>
+                            <li>
+                                <label><span>phone:</span></label>
+                                <input id="edit_phone" type="text" name="phone"/>
+                            </li>
+                             <li>
+                                <label><span>email:</span></label>
+                                <input id="edit_email" type="text" name="email"/>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">取消</button>
+                        <button class="btn btn-primary btn-sm">保存</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- 提示 -->
+    <div class="modal fade" id="info" tabindex="-1" role="dialog" aria-labelledby="add11">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="add11">提示信息</h4>
+                </div>
+
+                <div class="modal-body">
+
+                    <h4 id="msg"></h4>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">取消</button>
+                    <button onclick="delete_ajax()" class="btn btn-warning btn-sm">确定</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script>
+         function edit(id, name, phone, email) {
+            $('#edit_id').val(id);
+            $('#edit_name').val(name);
+            $('#edit_phone').val(phone);
+            $('#edit_email').val(email);
+            $('#edit').modal('show');
+        }
+
+        var sysuser_id = 0;
+        function delete_sysuser(sysuserid, sysuser_name) {
+            sysuser_id = sysuserid;
+            $('#msg').html('是否删除 '+ sysuser_name+" ?");
+            $('#info').modal('toggle');
+        }
+
+        function delete_ajax() {
+            url = window.location.href + "?id=" + sysuser_id;
+            fetch(url, {
+                method: 'DELETE'
+            }).then(resp => resp.json()).then(data => {
+                alert(data.msg);
+                if (data.status == 0) {
+                    // 刷新当前页面
+                    open(window.location.href, target = '_self');
+                }
+            })
+        }
+    </script>
+{% endblock %}

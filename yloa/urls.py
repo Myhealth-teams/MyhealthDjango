@@ -1,17 +1,16 @@
 from django.http import HttpRequest
-from django.shortcuts import render, redirect
 from django.urls import path
-from sys_user.models import SysUser
 from common import make_pwd
 from sys_user.views import *
 from sys_user.views import RoleView, ESView, ESLogView
 
 
-
+# 主页
 def to_index(request: HttpRequest):
     return render(request, 'index.html', locals())
 
 
+# 登陆
 def to_login(request: HttpRequest):
     if request.method == "POST":
         # 获取用户名和口令
@@ -44,10 +43,12 @@ def to_login(request: HttpRequest):
     return render(request, 'login.html', locals())
 
 
+# 注册
 def to_regist(request: HttpRequest):
     return render(request, 'register.html')
 
 
+# 登出
 def to_logout(req: HttpRequest):
     req.session.pop('login_user')
     return redirect('/login/')
@@ -59,8 +60,12 @@ urlpatterns = [
     path('logout/', to_logout),
     path('role/', RoleView.as_view()),
     path('product/',Product_view.as_view()),
+    path('search/',Serach_view.as_view()),
     path('init_es/', ESView.as_view()),
     path('upload_log/', ESLogView.as_view()),
     path('show_table/',ShowTableView.as_view()),
+    path('order_status/',OrderView.as_view()),
+    path('sysuse/', SysUseView.as_view()),
+    path('userauth/', UserAuthView.as_view()),
     path('', to_index),
 ]

@@ -1,3 +1,4 @@
+from django import db
 from django.http import HttpRequest
 from django.urls import path
 from common import make_pwd
@@ -16,15 +17,11 @@ def to_login(request: HttpRequest):
         # 获取用户名和口令
         name = request.POST.get('name', '')
         pwd = request.POST.get('pwd', '')
-        print('name=',name)
-        print('pwd=',pwd)
         if any((not name, not pwd, len(name) == 0, len(pwd) == 0)):
             error = '用户名或口令不能为空!'
 
         else:
-            print("--------")
             ret = SysUser.objects.filter(name=name, auth_string=make_pwd(pwd))
-            print(ret)
             if ret.exists():
                 login_user = ret.first()
 
@@ -45,6 +42,12 @@ def to_login(request: HttpRequest):
 
 # 注册
 def to_regist(request: HttpRequest):
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        user = SysUser.objects.create(name=username,auth_string=make_pwd(password))
+        SysUserRole.objects.create(id=user.id,user_id=user.id,role_id=2)
+        return redirect('/login/')
     return render(request, 'register.html')
 
 

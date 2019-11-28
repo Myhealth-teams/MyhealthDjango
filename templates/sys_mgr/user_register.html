@@ -3,7 +3,7 @@
 {% block content_nav_home %}统计查询{% endblock %}
 {% block content_nav %}
     <li>用户统计</li>
-    <a href="/user_status/" style="float: right; margin-top: -7.2px;height: 35px" class="btn btn-success" >刷新</a>
+    <a href="/user_register/" style="float: right; margin-top: -7.2px;height: 35px" class="btn btn-success" >刷新</a>
 
 {% endblock %}
 
@@ -102,9 +102,8 @@
                     itemStyle: {
                         normal: {
                             color: 'transparent'
-                        },
+                        }
                     },
-
                     data: data.map(function (d) {
                     }),
                     coordinateSystem: 'polar',

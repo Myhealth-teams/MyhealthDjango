@@ -98,15 +98,20 @@ class UserAuthView(View):
         auth_id = request.GET.get("id")
         if auth_id:
             userauth = Userauth.objects.get(pk=auth_id).auth
-            if userauth == 0 and not Authdeatil.objects.filter(auth_id=auth_id):
-                Authdeatil.objects.create(auth_id=auth_id,auth_deatil1="管理系统",auth_detail="不可以修改系统")
-            elif userauth == 1 and not Authdeatil.objects.filter(auth_id=auth_id):
-                Authdeatil.objects.create(auth_id=auth_id, auth_deatil1="管理系统", auth_detail="可以修改系统")
+            if userauth == 0 :
+                auth = Authdeatil.objects.get(pk=auth_id)
+                auth.auth_detail = "不可以修改系统"
+                auth.save()
+            elif userauth == 1 :
+                auth = Authdeatil.objects.get(pk=auth_id)
+                auth.auth_detail = "可以修改系统"
+                auth.save()
             authdeatil = Authdeatil.objects.get(pk=auth_id)
             return render(request, 'sys_mgr/user_auth.html', locals())
 
         auths = Userauth.objects.all()
         return render(request, 'sys_mgr/user_auth.html',locals())
+
 
 
 # 数据表管理
@@ -202,7 +207,10 @@ class Serach_view(View):
 class OrderView(View):
     def get(self,request):
         return render(request,'sys_mgr/order_status.html')
-
+# 用户注册统计
+class User_register(View):
+    def get(self,request):
+        return render(request,'sys_mgr/user_register.html')
 
 # 搜索引擎
 class ESView(View):

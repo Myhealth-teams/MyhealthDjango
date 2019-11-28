@@ -3,7 +3,7 @@
 {% block content_nav_home %}统计查询{% endblock %}
 {% block content_nav %}
     <li>订单统计</li>
-    <a href="#" style="float: right; margin-top: -7px;height: 35px" class="btn btn-success" >刷新</a>
+    <a href="/order_status/" style="float: right; margin-top: -7.2px;height: 35px" class="btn btn-success" >刷新</a>
 
 {% endblock %}
 
@@ -16,7 +16,7 @@
                     <canvas id="canvas1"></canvas>
 {#                    <p style="text-align: center;font-size: 18px;border-radius: 8px 8px 8px 8px;height:20px;width: 400px; margin-left: -16px;">日统计</p>#}
                 </div>
-                <div id="main2" class="canvas" style="height: 380px;width: 500px">
+                <div id="main2" class="canvas" style="height: 380px;width: 500px;">
                     <canvas id="canvas1"></canvas>
 {#                    <p style="text-align: center;font-size: 18px;background-color: pink;border-radius: 8px 8px 8px 8px;width: 490px; margin-left: -16px">周统计</p>#}
                 </div>
@@ -42,7 +42,9 @@
         // 指定图表的配置项和数据
         var option1 = {
             title:{
-                text:'日统计'
+                text:'日统计',
+                left:'200px'
+
             },
             xAxis: {
                 type: 'category',
@@ -55,10 +57,25 @@
                 name:'订单量',
             },
             series: [{
-                data: [500, 300, 860, 1153, 1290, 1330, 1150],
+                data: [50, 30, 86, 153, 290, 330, 150],
                 type: 'line',
-                areaStyle: {}
-            }]
+                areaStyle: {
+                    color:'yellow'
+                },
+                color:'coral'
+            }],
+            toolbox: {
+            show: true,
+            orient: 'vertical',
+            left: 'right',
+            top: 'center',
+            feature: {
+                mark: {show: true},
+                {#dataView: {show: true, readOnly: false},#}
+                magicType: {show: true, type: ['line', 'bar',]},
+                restore: {show: true},
+            }
+            },
         };
 
         // 使用刚指定的配置项和数据显示图表。
@@ -68,7 +85,8 @@
         var myChart2 = echarts.init(document.getElementById('main2'));
         var option2 = {
             title:{
-                text:'周统计'
+                text:'周统计',
+                left:'200px'
             },
             xAxis: {
                 type: 'category',
@@ -81,54 +99,106 @@
                 name:'订单量',
             },
             series: [{
-                data: [820, 932, 901, 934, 1290, 1330, 1320],
+                data: [375, 450, 401, 334, 290, 330, 320],
                 type: 'line',
-                areaStyle: {}
-            }]
+                areaStyle: {
+                    color:'pink'
+                },
+                color:'purple'
+            }],
+            toolbox: {
+            show: true,
+            orient: 'vertical',
+            left: 'right',
+            top: 'center',
+            feature: {
+                mark: {show: true},
+                {#dataView: {show: true, readOnly: false},#}
+                magicType: {show: true, type: ['line', 'bar',]},
+                restore: {show: true},
+            }
+            },
+
+
         };
         myChart2.setOption(option2);
 
         var myChart3 = echarts.init(document.getElementById('main3'));
         var option3 = {
             title:{
-                text:'月统计'
+                text:'月统计',
+                left:'200px'
             },
             xAxis: {
                 type: 'category',
                 boundaryGap: false,
                 name:'月',
-                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul','Aug','Sep','Oct','Nov','Dec']
             },
             yAxis: {
                 type: 'value',
                 name:'订单量',
             },
             series: [{
-                data: [820, 932, 901, 934, 1290, 1330, 1320],
+                data: [820, 932, 901, 934, 1290, 1330, 1320,557,988,877,1212,1400],
                 type: 'line',
-                areaStyle: {}
-            }]
+                areaStyle: {
+                    color:'green'
+                },
+                color:'blue'
+            }],
+            toolbox: {
+            show: true,
+            orient: 'vertical',
+            left: 'right',
+            top: 'center',
+            feature: {
+                mark: {show: true},
+                {#dataView: {show: true, readOnly: false},#}
+                magicType: {show: true, type: ['line', 'bar',]},
+                restore: {show: true},
+            }
+            },
         };
         myChart3.setOption(option3);
 
-         var myChart4 = echarts.init(document.getElementById('main4'));
-        var option4 = {
+        var myChart4 = echarts.init(document.getElementById('main4'));
+        option4 = {
             title:{
-                text:'年统计'
+                text:'年统计',
+                left:'200px',
+
             },
             xAxis: {
                 type: 'category',
                 boundaryGap: false,
-                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                name:'年',
+                data: ['2016', '2017', '2018', '2019', '2020', '2021', '2022','2023']
             },
             yAxis: {
-                type: 'value'
+                type: 'value',
+                name:'订单量',
             },
             series: [{
-                data: [820, 932, 901, 934, 1290, 1330, 1320],
+                data: [3000, 2932, 2901, 2934, 2290, 3330, 2320,2822],
                 type: 'line',
-                areaStyle: {}
-            }]
+                areaStyle: {
+                    color:'pewter'
+                },
+                color:'orange'
+            }],
+            toolbox: {
+            show: true,
+            orient: 'vertical',
+            left: 'right',
+            top: 'center',
+            feature: {
+                mark: {show: true},
+                {#dataView: {show: true, readOnly: false},#}
+                magicType: {show: true, type: ['line', 'bar',]},
+                restore: {show: true},
+            }
+            },
         };
         myChart4.setOption(option4);
 

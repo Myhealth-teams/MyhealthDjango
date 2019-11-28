@@ -1,0 +1,144 @@
+{% extends 'basic/base.html' %}
+
+{% block content_nav_home %}统计查询{% endblock %}
+{% block content_nav %}
+    <li>用户统计</li>
+    <a href="/user_register/" style="float: right; margin-top: -7.2px;height: 35px" class="btn btn-success" >刷新</a>
+
+{% endblock %}
+
+{% block content %}
+    <table class="table table-bordered table-striped text-center bg-info">
+        <thead>
+         <tbody>
+
+                <div id="main1" style="background-color: #f5f5f5;height: 550px ;width: 1200px;border:#2b542c 2px ;border-radius: 8px 8px 8px 8px;" ></div>
+                <div id="main2" style="background-color: #f5f5f5;height: 550px ;width: 1200px;border:#2b542c 2px ;border-radius: 8px 8px 8px 8px;" ></div>
+        </tbody>
+        </thead>
+    </table>
+{% endblock %}
+{% block js %}
+    <script type="text/javascript">
+         var myChart1 = echarts.init(document.getElementById('main1'));
+         option1 = {
+             title: {
+                 text: '某一周用户注册量',
+             },
+             tooltip : {
+                 trigger: 'axis',
+                 axisPointer : {
+                        type : 'shadow'
+                    }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+
+                xAxis: {
+                    type: 'value'
+                },
+                yAxis: {
+                    type: 'category',
+                    data: ['周一','周二','周三','周四','周五','周六','周日']
+                },
+                series: [{
+                    data: [6034, 5013, 7632, 6023, 9290, 13330, 12320,15013],
+                    type: 'bar',
+                    areaStyle: {},
+                    color:'pink'
+                }],
+            };
+            myChart1.setOption(option1);
+
+
+
+         var myChart2 = echarts.init(document.getElementById('main2'));
+         var data = [
+                [0, 13000, ],
+                [0, 18000, ],
+                [0, 20101, ],
+                [0, 15600, ],
+                [0, 20000, ],
+                [0, 14000, ],
+                [0, 23000, ],
+                [0, 18000, ],
+                [0, 16500, ],
+                [0, 16000, ],
+                [0, 13000, ],
+                [0, 9500, ],
+                [0, 16800, ],
+                [0, 12300, ],
+                [0, 13500, ],
+                [0, 18600, ],
+                [0, 8417,],
+                [0, 7000, ],
+                [0, 11200, ]
+            ];
+            var cities = ['北京', '上海', '陕西', '广州', '安徽', '浙江', '江苏', '福州', '山东', '河北', '吉林', '黑龙江', '湖南', '河北', '湖北', '四川', '甘肃', '西藏', '广西'];
+
+
+            option2 = {
+                title: {
+                    text: '用户地区分布图',
+                    subtext: '用户分布在中国那个角落？'
+                },
+                grid: {
+                    top: 100
+                },
+                angleAxis: {
+                    type: 'category',
+                    data: cities
+                },
+                radiusAxis: {
+                },
+                polar: {
+                },
+                series: [{
+                    type: 'bar',
+                    itemStyle: {
+                        normal: {
+                            color: 'transparent'
+                        }
+                    },
+                    data: data.map(function (d) {
+                    }),
+                    coordinateSystem: 'polar',
+                }, {
+                    type: 'bar',
+                    data: data.map(function (d) {
+                        return d[1] - d[0];
+                    }),
+                    coordinateSystem: 'polar',
+                }, {
+                    type: 'bar',
+                    itemStyle: {
+                        normal: {
+                            color: 'transparent'
+                        }
+                    },
+                    data: data.map(function (d) {
+                    }),
+                    coordinateSystem: 'polar',
+                    stack: '均值',
+                    silent: true,
+                    z: 10
+                }, {
+                    type: 'bar',
+                    data: data.map(function (d) {
+                    }),
+                    coordinateSystem: 'polar',
+                    barGap: '-100%',
+                    z: 10
+                }],
+                legend: {
+                    show: true,
+                }
+            };
+        myChart2.setOption(option2);
+
+</script>
+{% endblock %}

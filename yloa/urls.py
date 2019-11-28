@@ -70,6 +70,6 @@ urlpatterns = [
     path('order_status/',OrderView.as_view()),
     path('sysuse/', SysUseView.as_view()),
     path('userauth/', UserAuthView.as_view()),
-    path('user_register/',User_register.as_view()),
+    path('user_status/',User_register.as_view()),
     path('', to_index),
 ]

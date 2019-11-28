@@ -20,7 +20,6 @@ def search_table(table):
 
             items1 = cursor1.fetchall()
             items2 = cursor2.fetchall()
-            print(items2)
             conn.commit()
             return items1,items2
         except Exception as e:
@@ -151,7 +150,6 @@ def search_str(str,table):
         str_sql += table_name[0]+" "+"like '%"+str+ "%' or "
     sqlstr= str_sql[:-3]
     sql = "select * from {} where {};".format(table, sqlstr)
-    print(sql)
     try:
         cursor.execute(sql)
         item = cursor.fetchall()

@@ -7,7 +7,7 @@
                 <i class="icon-home icon-large"></i> 主页
             </a>
         </div>
-        {% if request.session.login_user.role_code == '杨佳伟' %}
+        {% if request.session.login_user.role_name == '超级管理员' %}
             <div class="panel panel-default menu-first">
             <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true"
                aria-controls="collapseOne">
@@ -45,7 +45,7 @@
 
             <div id="collapseThree" class="panel-collapse collapse">
                 <ul class="nav nav-list menu-second">
-                    <li><a href="/user_register/"><i class="icon-user"></i> 用户统计</a></li>
+                    <li><a href="/user_status/"><i class="icon-user"></i> 用户统计</a></li>
                     <li><a href="/order_status/"><i class="icon-edit"></i> 订单统计</a></li>
 {#                    <li><a href="#"><i class="icon-trash"></i> 评论分析</a></li>#}
 {#                    <li><a href="#"><i class="icon-list"></i> 库存统计</a></li>#}

@@ -22,7 +22,7 @@ class RoleView(View):
         return render(request, 'sys_mgr/role_list.html', locals())
 
     def post(self, request):
-        print(request.POST)
+
         id = request.POST.get('role_id', None)  # 注意： form表单页面不建议使用id 字段名
         name = request.POST.get('name')
         code = request.POST.get('code')
@@ -51,7 +51,7 @@ class RoleView(View):
 class SysUseView(View):
     def get(self,request):
         if request.GET.get('id'):
-            print(request.GET.get('id'))
+
             sysuse = SysUser.objects.get(pk=request.GET.get('id'))
             return JsonResponse({
                 'id': sysuse.id,
@@ -68,7 +68,7 @@ class SysUseView(View):
         name = request.POST.get("name")
         phone = request.POST.get("phone")
         email = request.POST.get("email")
-        print(id,name,phone)
+
         if id:
             sysuser = SysUser.objects.get(pk=id)
             sysuser.name = name
@@ -150,7 +150,7 @@ class Product_view(View):
                 print("添加失败")
         elif flag == '0':
             sql = update_sql(value_dict,table)
-            print(sql)
+
             if insert_field(sql):
                 print("编辑成功")
             else:
@@ -163,10 +163,10 @@ class Product_view(View):
         id = request.GET.get("d_id")
         table_name = request.GET.get("tname")
         str_id = request.GET.get("str_id")
-        print(str_id)
+
         str_delete = str_id +"="+id
         sql = "delete from {} where {}".format(table_name, str_delete)
-        print(sql)
+
         if insert_field(sql):
             return JsonResponse({
                 'status': 0,
@@ -210,7 +210,7 @@ class OrderView(View):
 # 用户注册统计
 class User_register(View):
     def get(self,request):
-        return render(request,'sys_mgr/user_register.html')
+        return render(request,'sys_mgr/user_status.html')
 
 # 搜索引擎
 class ESView(View):
@@ -221,7 +221,7 @@ class ESView(View):
         cursor = connection.cursor()
         cursor.execute('select * from goods')
         for row in cursor.fetchall():
-            print(row)
+
             doc = {
                 'id': row[0],
                 'name': row[1],
@@ -245,7 +245,7 @@ class ESLogView(View):
     def post(self, request):
 
         data = request.POST
-        print(data)
+
 
         return JsonResponse({
             'status': 0,
